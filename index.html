@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo Tokyo - Experience the Power of Personalization</title>
+    <link rel="shortcut icon" href="neo_tokyo-logo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            font-family: 'Rajdhani', sans-serif !important;
+        }
+        
+        :root {
+            --primary-pink: rgb(255, 0, 85);
+            --dark-pink: rgb(200, 0, 65);
+        }
+        
+        .brand-pink {
+            color: var(--primary-pink);
+        }
+        
+        .bg-brand-pink {
+            background-color: var(--primary-pink);
+        }
+        
+        .border-brand-pink {
+            border-color: var(--primary-pink);
+        }
+        
+        .hover-brand-pink:hover {
+            background-color: var(--dark-pink);
+        }
+        
+        .pink-glow {
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+        }
+        
+        .pink-text-glow {
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .fade-in.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translate(0);
+        }
+        
+        .countdown-timer {
+            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 85, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 85, 0.8); }
+        }
+        
+        .hero-banner {
+            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+                        url('tokyo.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 80vh;
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 0, 85, 0.1);
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            background: var(--primary-pink);
+            color: white;
+        }
+        
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            animation: bounce 2s infinite;
+        }
+        
+        .call-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 0, 85, 0.1);
+        }
+
+        /* PARALLAX REVEAL STYLES */
+        .parallax-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .red-border-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: var(--primary-pink);
+            z-index: 10;
+        }
+        
+        .parallax-container {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+            perspective: 2000px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .panel {
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            top: 0;
+            z-index: 3;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .panel-left {
+            left: 0;
+            background: white;
+            align-items: flex-end;
+            padding-right: 5%;
+        }
+
+        .panel-right {
+            right: 0;
+            background: white;
+            align-items: flex-start;
+            padding-left: 5%;
+        }
+
+        .text-left, .text-right {
+            font-size: 3.5rem;
+            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1.03em;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        /* Split TOKYO into two parts for styling */
+        .first-part {
+            position: relative;
+            display: inline-block;
+        }
+
+        .second-part {
+            display: inline-block;
+        }
+        
+        /* Fixed underline to be exactly half of TOKYO */
+        .first-part::after {
+            content: '';
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            height: 7px;
+            background: var(--primary-pink);
+            width: 2%;
+            transition: width 0.6s ease-in-out;
+        }
+
+        .in-view .first-part::after {
+            width: 50%; /* Exactly half of TOKYO (TO part) */
+        }
+
+        /* Position both texts at exact same height */
+        .panel-left .text-left {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+        }
+        
+        .panel-right .text-right {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+        }
+        
+        .content-wrapper {
+            position: absolute;
+            top: 60%;
+            left: 5%;
+            width: 90%;
+        }
+
+        .headline-right {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin: 5.5rem 0 0.5rem;
+            padding-left: 2px;
+        }
+
+        .headline-text {
+            position: relative;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-pink) 0%, var(--dark-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: #333;
+            font-weight: 600;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.1em;
+            line-height: 1.4;
+            margin-top: 0rem;
+            max-width: 300px;
+        }
+
+        .tagline-bold {
+            font-weight: 700;
+            color: #111;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .in-view .tagline-bold::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-pink);
+            transform: translateX(-100%);
+            animation: lineReveal 1.2s forwards 0.5s;
+        }
+
+        .center-image {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            background-image: url('tokyo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: width 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s ease-in-out;
+            will-change: width, opacity;
+            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
+            filter: contrast(1.2) brightness(1.1);
+            width: 20%;
+            opacity: 0;
+        }
+
+        @keyframes textGlow {
+            0% { opacity: 0.95; text-shadow: 0 0 5px rgba(255, 0, 85, 0); }
+            50% { opacity: 1; text-shadow: 0 0 8px rgba(255, 0, 85, 0.3); }
+            100% { opacity: 0.95; text-shadow: 0 0 5px rgba(255, 0, 85, 0); }
+        }
+
+        @keyframes lineReveal {
+            to { transform: translateX(0); }
+        }
+
+        .in-view .text-left, 
+        .in-view .text-right {
+            animation: textGlow 2.5s infinite ease-in-out;
+        }
+
+        .in-view .headline-text {
+            animation: textGlow 2.5s infinite ease-in-out 0.5s;
+        }
+
+        /* Hidden content initially - shows after scroll */
+        .hidden-content {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateY(50px);
+            text-align: center;
+            z-index: 15;
+            width: 90%;
+            max-width: 1200px;
+            pointer-events: none;
+        }
+
+        .hidden-content.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Updated NEO TOKYO styling */
+        .neo-tokyo-text {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 0.9;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+        }
+
+        .neo-text {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .tokyo-text {
+            color: var(--primary-pink);
+            text-shadow: 0 0 15px rgba(255, 0, 85, 0.8);
+        }
+
+        /* Updated countdown timer styling */
+        .big-countdown {
+            /* background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink)); */
+            color: white;
+            padding: 1rem 5rem;
+            border-radius: 40px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            animation: pulse-glow 2s infinite;
+            margin-top: 2rem;
+            display: inline-block;
+            box-shadow: 0 0 40px rgba(255, 0, 85, 0.5);
+            letter-spacing: 10px;
+        }
+
+        .hidden-content p {
+            color: white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        .hidden-content .h-1 {
+            background: var(--primary-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+        }
+
+        /* Remove duplicate parallax countdown */
+        .parallax-countdown {
+            display: none;
+        }
+
+        /* Social media icons */
+        .facebook-icon::before {
+            content: "📘";
+            font-size: 24px;
+        }
+        
+        .instagram-icon::before {
+            content: "📷";
+            font-size: 24px;
+        }
+        
+        .whatsapp-icon::before {
+            content: "📱";
+            font-size: 24px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .text-left, .text-right {
+                font-size: 3.2rem;
+            }
+            .tagline {
+                max-width: 280px;
+                font-size: 0.7rem;
+            }
+            .neo-tokyo-text {
+                font-size: 3.5rem;
+            }
+            .big-countdown {
+                font-size: 1.8rem;
+                padding: 1.8rem 2.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .text-left, .text-right {
+                font-size: 2.8rem;
+            }
+            .headline-right {
+                font-size: 0.9rem;
+                margin: 4rem 0 0.5rem;
+            }
+            .tagline {
+                font-size: 0.65rem;
+                max-width: 250px;
+            }
+            .content-wrapper {
+                top: 62%;
+            }
+            .neo-tokyo-text {
+                font-size: 3rem;
+            }
+            .big-countdown {
+                font-size: 1.6rem;
+                padding: 1.5rem 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .panel {
+                width: 50%;
+            }
+            
+            .text-left, .text-right {
+                font-size: 2.5rem;
+                letter-spacing: 0.5em;
+            }
+            
+            .panel-left .text-left {
+                right: 8%;
+            }
+            
+            .panel-right .text-right {
+                left: 8%;
+            }
+            
+            .first-part::after {
+                bottom: -15px;
+                height: 5px;
+            }
+            
+            .content-wrapper {
+                top: 62%;
+                left: 8%;
+                width: 84%;
+            }
+            
+            .headline-right {
+                font-size: 0.85rem;
+                letter-spacing: 0.15em;
+                margin-top: 3rem;
+            }
+            
+            .tagline {
+                font-size: 0.6rem;
+                max-width: 90%;
+                margin: 1rem 0;
+            }
+
+            .neo-tokyo-text {
+                font-size: 2.5rem;
+            }
+            
+            .big-countdown {
+                font-size: 1.4rem;
+                padding: 1.2rem 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .text-left, .text-right {
+                font-size: 2rem;
+                letter-spacing: 0.4em;
+            }
+            
+            .panel-left .text-left {
+                right: 5%;
+            }
+            
+            .panel-right .text-right {
+                left: 5%;
+            }
+            
+            .headline-right {
+                font-size: 0.8rem;
+                margin-top: 2.5rem;
+                letter-spacing: 0.12em;
+            }
+            
+            .tagline {
+                font-size: 0.55rem;
+                line-height: 1.5;
+            }
+            
+            .first-part::after {
+                bottom: -12px;
+                height: 4px;
+            }
+            
+            .content-wrapper {
+                top: 65%;
+            }
+
+            .neo-tokyo-text {
+                font-size: 2rem;
+            }
+            
+            .big-countdown {
+                font-size: 1.2rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .social-icon {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .text-left, .text-right {
+                font-size: 1.8rem;
+                letter-spacing: 0.3em;
+            }
+            
+            .headline-right {
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+                margin-top: 2rem;
+            }
+            
+            .tagline {
+                font-size: 0.5rem;
+                line-height: 1.4;
+                max-width: 95%;
+            }
+            
+            .first-part::after {
+                bottom: -10px;
+                height: 3px;
+            }
+
+            .neo-tokyo-text {
+                font-size: 1.8rem;
+            }
+            
+            .big-countdown {
+                font-size: 1rem;
+                padding: 0.8rem 1.2rem;
+            }
+
+            .social-icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+        
+        /* Handle very small devices */
+        @media (max-width: 360px) {
+            .text-left, .text-right {
+                font-size: 1.5rem;
+                letter-spacing: 0.25em;
+            }
+            
+            .headline-right {
+                font-size: 0.7rem;
+                letter-spacing: 0.08em;
+                margin-top: 1.8rem;
+            }
+            
+            .tagline {
+                font-size: 0.48rem;
+            }
+            
+            .content-wrapper {
+                top: 68%;
+            }
+
+            .neo-tokyo-text {
+                font-size: 1.5rem;
+            }
+            
+            .big-countdown {
+                font-size: 0.9rem;
+                padding: 0.7rem 1rem;
+            }
+
+            .social-icon {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-center items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full pink-glow flex items-center justify-center">
+                        <img src="neo_tokyo-logo.png" width="40" alt="logo">
+                    </div>
+                    <h1 class="text-3xl font-bold brand-pink pink-text-glow">NEO TOKYO</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+ 
+            
+    <!-- Parallax Reveal Section -->
+    <div class="parallax-wrapper">
+        <div id="parallax-container" class="parallax-container">
+            <!-- Left Panel - Contains NEO text -->
+            <div id="panel-left" class="panel panel-left">
+                <div class="text-left">NEO</div>
+            </div>
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="floating-animation absolute top-32 left-20 w-3 h-3 bg-brand-pink rounded-full opacity-60"></div>
+                <div class="floating-animation absolute top-40 right-32 w-2 h-2 bg-brand-pink rounded-full opacity-40" style="animation-delay: 1s;"></div>
+                <div class="floating-animation absolute bottom-40 left-1/4 w-4 h-4 bg-brand-pink rounded-full opacity-50" style="animation-delay: 2s;"></div>
+                <div class="floating-animation absolute top-1/3 right-20 w-2.5 h-2.5 bg-brand-pink rounded-full opacity-60" style="animation-delay: 3s;"></div>
+            </div>
+        
+            <!-- Right Panel - Contains TOKYO text -->
+            <div id="panel-right" class="panel panel-right">
+                <div class="text-right">
+                    <span class="first-part">TOKYO</span>
+                    <!-- <span class="second-part">KYO</span> -->
+                </div>
+                <div class="content-wrapper">
+                    <div class="tagline">
+                        <span class="tagline-bold">Experience the Power of Personalization</span>       
+                    </div>
+                    
+                    <div class="headline-right">
+                        <span class="headline-text">ENDLESS POSSIBILITIES</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Image with Tokyo background -->
+            <div id="center-image" class="center-image"></div>
+
+            <!-- Hidden Content - Shows after scroll (Single countdown) -->
+            <div id="hidden-content" class="hidden-content">
+                <h1 class="neo-tokyo-text">
+                    <span class="neo-text">NEO</span> 
+                    <span class="tokyo-text">TOKYO</span>
+                </h1>
+                <div class="h-1 w-32 bg-brand-pink mx-auto mb-8 pink-glow"></div>
+                <p class="text-2xl md:text-3xl mb-8 font-light">
+                    Experience the Power of Personalization
+                </p>
+                <p class="text-xl mb-12 max-w-2xl mx-auto">
+                    ENDLESS POSSIBILITIES
+                </p>
+                
+                <!-- Single Countdown Timer -->
+                <div class="big-countdown">
+                    <span class="text-sm">Launching In!</span>
+                    <div id="main-countdown" class="font-mono">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pink border at the bottom -->
+        <div class="red-border-bottom"></div>
+    </div>
+
+    <!-- About Us Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 brand-pink pink-text-glow">About Us</h2>
+                <div class="h-1 w-24 bg-brand-pink mx-auto pink-glow"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+                <div class="slide-in-left">
+                    <h3 class="text-3xl font-bold brand-pink mb-6">For Gamers by Gamers</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                        We specialize in creating high-performance custom PCs tailored to your needs. Our team of experts ensures top-quality components and exceptional craftsmanship to deliver the ultimate gaming and workstation experience.
+                    </p>
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 card-hover">
+                        <h4 class="text-xl font-semibold brand-pink mb-3">Team NeoTokyo</h4>
+                        <p class="text-gray-500">Dedicated professionals committed to excellence</p>
+                    </div>
+                </div>
+                
+                <div class="slide-in-right">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 card-hover">
+                        <h3 class="text-2xl font-bold brand-pink mb-6">Why We Stand Out</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-3 h-3 bg-brand-pink rounded-full pink-glow"></div>
+                                <span class="text-gray-600 text-lg">Expert Craftsmanship</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-3 h-3 bg-brand-pink rounded-full pink-glow"></div>
+                                <span class="text-gray-600 text-lg">Premium Components</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-3 h-3 bg-brand-pink rounded-full pink-glow"></div>
+                                <span class="text-gray-600 text-lg">Personalized Solutions</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-3 h-3 bg-brand-pink rounded-full pink-glow"></div>
+                                <span class="text-gray-600 text-lg">24/7 Support</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20 bg-white" id="contact">
+        <div class="container mx-auto px-6">
+            <div class="fade-in text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 brand-pink pink-text-glow">Get in Touch</h2>
+                <div class="h-1 w-24 bg-brand-pink mx-auto pink-glow"></div>
+                <p class="text-xl text-gray-600 mt-6">Ready to build your dream PC? Our team is here to help you every step of the way.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Contact Form -->
+                <div class="slide-in-left">
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg card-hover">
+                        <h3 class="text-2xl font-bold brand-pink mb-6">Send us a Message</h3>
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Name</label>
+                                <input type="text" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink transition-colors" placeholder="Your Name">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink transition-colors" placeholder="your.email@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Message</label>
+                                <textarea rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink transition-colors" placeholder="Tell us about your dream PC..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-pink hover-brand-pink text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Contact Details -->
+                <div class="slide-in-right">
+                    <div class="space-y-8">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 card-hover">
+                            <h4 class="text-xl font-semibold brand-pink mb-3">📧 Email</h4>
+                            <p class="text-gray-600 text-lg">info@neotokyo.in</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 card-hover">
+                            <h4 class="text-xl font-semibold brand-pink mb-3">📞 Phone</h4>
+                            <p class="text-gray-600 text-lg">+91 81119 01609</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 card-hover">
+                            <h4 class="text-xl font-semibold brand-pink mb-3">💬 Live Chat</h4>
+                            <p class="text-gray-600 text-lg">Available during business hours</p>
+                        </div>
+                        
+                        <!-- Business Hours -->
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-lg">
+                            <h4 class="text-xl font-semibold brand-pink mb-4">Business Hours</h4>
+                            <div class="space-y-2 text-gray-600">
+                                <div class="flex justify-between">
+                                    <span>Monday - Friday</span>
+                                    <span class="font-semibold">9AM - 8PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Saturday</span>
+                                    <span class="font-semibold">10AM - 6PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Sunday</span>
+                                    <span class="text-red-500 font-semibold">Closed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 text-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col items-center space-y-6">
+                <!-- Logo and Branding -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full pink-glow flex items-center justify-center">
+                        <img src="neo_tokyo-logo.png" width="40" alt="logo">
+                    </div>
+                    <span class="text-2xl font-bold brand-pink pink-text-glow">NEO TOKYO</span>
+                </div>
+                
+                <!-- Social Media Links -->
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com/neotokyopc" target="_blank" class="social-icon facebook-icon" title="Follow us on Facebook"></a>
+                    <a href="https://www.instagram.com/neotokyopc" target="_blank" class="social-icon instagram-icon" title="Follow us on Instagram"></a>
+                    <a href="https://wa.me/918111901609" target="_blank" class="social-icon whatsapp-icon" title="Contact us on WhatsApp"></a>
+                </div>
+                
+                <!-- Copyright -->
+                <div class="text-center">
+                    <p class="text-gray-400">&copy; 2025 Neo Tokyo. All rights reserved.</p>
+                    <p class="brand-pink text-sm mt-2">Experience the Power of Personalization</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Buttons -->
+    <a href="https://wa.me/918111901609" target="_blank" class="whatsapp-btn bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm4.52 7.35c-.18-.4-.46-.75-.84-1.01-.37-.26-.8-.4-1.26-.4-.18 0-.37.02-.56.07-.18.05-.35.12-.51.21-.32.18-.58.42-.78.72-.2.3-.3.65-.3 1.03 0 .33.06.65.18.95.12.3.29.57.51.81.44.48.97.85 1.56 1.09.59.24 1.25.36 1.97.36.28 0 .56-.03.83-.08.27-.05.52-.13.76-.23.48-.2.88-.49 1.2-.87.32-.38.48-.85.48-1.40 0-.31-.06-.6-.17-.87z"/>
+        </svg>
+    </a>
+
+    <a href="tel:+918111901609" class="call-btn bg-brand-pink hover-brand-pink text-white p-4 rounded-full shadow-lg transition-all duration-300">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+    </a>
+
+    <script>
+        // State variables
+        let scrollY = 0;
+        let inView = false;
+        
+        // Get DOM elements
+        const parallaxContainer = document.getElementById('parallax-container');
+        const panelLeft = document.getElementById('panel-left');
+        const panelRight = document.getElementById('panel-right');
+        const centerImage = document.getElementById('center-image');
+        const hiddenContent = document.getElementById('hidden-content');
+
+        // Scroll to parallax function
+        function scrollToParallax() {
+            parallaxContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Countdown Timer with October 1st end date
+        function initCountdown() {
+            // Set launch date to October 1st, 2025
+            const launchDate = new Date('2025-10-01T00:00:00');
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = launchDate.getTime() - now;
+                
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                    document.getElementById('main-countdown').innerHTML = countdownText;
+                } else {
+                    document.getElementById('main-countdown').innerHTML = "We're Live!";
+                }
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Throttle function for performance
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        }
+
+        function handleScroll() {
+            scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Check if parallax section is in view
+            const rect = parallaxContainer.getBoundingClientRect();
+            const isInView = rect.top <= window.innerHeight / 2 && rect.bottom >= 0;
+            
+            if (isInView !== inView) {
+                inView = isInView;
+                if (inView) {
+                    parallaxContainer.classList.add('in-view');
+                } else {
+                    parallaxContainer.classList.remove('in-view');
+                }
+            }
+
+            // Calculate parallax values based on the parallax section's position
+            const parallaxTop = parallaxContainer.getBoundingClientRect().top;
+            const relativeScroll = Math.max(0, window.innerHeight - parallaxTop);
+            
+            const parallaxActive = relativeScroll > 200;
+            const parallaxDeep = relativeScroll > 400;
+            const panelTransformPercentage = Math.min(50, relativeScroll / 8);
+            const imageWidth = parallaxActive ? Math.min(100, 20 + (relativeScroll / 6)) : 20;
+            const imageOpacity = Math.min(1, relativeScroll / 400);
+
+            // Apply transforms with better calculations
+            panelLeft.style.transform = `translateX(-${panelTransformPercentage}%)`;
+            panelRight.style.transform = `translateX(${panelTransformPercentage}%)`;
+            centerImage.style.width = `${imageWidth}%`;
+            centerImage.style.opacity = imageOpacity;
+
+            // Show hidden content when image is sufficiently revealed
+            if (imageOpacity > 0.7 && imageWidth > 60) {
+                hiddenContent.classList.add('show');
+            } else {
+                hiddenContent.classList.remove('show');
+            }
+        }
+
+        // Animation Observer
+        function initAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Smooth scrolling
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // Floating elements parallax
+        function initParallax() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.floating-animation');
+                
+                parallaxElements.forEach((element, index) => {
+                    const rate = scrolled * -0.2 * (index + 1);
+                    element.style.transform = `translate(${Math.sin(scrolled * 0.001 + index) * 10}px, ${rate}px)`;
+                });
+            });
+        }
+
+        // Form submission
+        function initForm() {
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We\'ll get back to you soon.');
+                this.reset();
+            });
+        }
+
+        // Throttled scroll handler for better performance
+        const throttledScrollHandler = throttle(handleScroll, 16); // ~60fps
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initCountdown();
+            initAnimations();
+            initSmoothScroll();
+            initParallax();
+            initForm();
+            
+            // Add scroll event listener
+            window.addEventListener('scroll', throttledScrollHandler);
+            
+            // Add resize event listener for responsive behavior
+            window.addEventListener('resize', throttle(handleScroll, 100));
+
+            // Optional: Add intersection observer for better performance on mobile
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            window.addEventListener('scroll', throttledScrollHandler);
+                        }
+                    });
+                }, {
+                    rootMargin: '50px'
+                });
+
+                observer.observe(parallaxContainer);
+            }
+        });
+    </script>
+</body>
+</html>

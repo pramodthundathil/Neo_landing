@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEO TOKYO Parallax Reveal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Niveau+Grotesk:wght@400;500;700&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        /* Add some content before and after to enable scrolling */
+        .spacer {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .red-border-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: #ff1744;
+            z-index: 10;
+        }
+        
+        .parallax-container {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+            perspective: 2000px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .panel {
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            top: 0;
+            z-index: 3;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .panel-left {
+            left: 0;
+            background: white;
+            align-items: flex-end;
+            padding-right: 5%;
+        }
+
+        .panel-right {
+            right: 0;
+            background: white;
+            align-items: flex-start;
+            padding-left: 5%;
+        }
+
+        .text-left, .text-right {
+            font-size: 3.5rem;
+            font-weight: 400;
+            font-family: 'Niveau Grotesk', sans-serif;
+            color: #111;
+            text-transform: uppercase;
+            letter-spacing: 1.03em;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        /* Split TOKYO into two parts for styling */
+        .first-part {
+            position: relative;
+            display: inline-block;
+        }
+
+        .second-part {
+            display: inline-block;
+        }
+        
+        /* Only apply red underline to TO - reduced width and increased gap */
+        .first-part::after {
+            content: '';
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            height: 7px;
+            background: #ff1744;
+            width: 5%;
+            transition: width 0.4s ease-in-out;
+        }
+
+        .in-view .first-part::after {
+            width: 80%;
+        }
+
+        /* Position both texts at exact same height */
+        .panel-left .text-left {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+        }
+        
+        .panel-right .text-right {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+        }
+        
+        .content-wrapper {
+            position: absolute;
+            top: 60%;
+            left: 5%;
+            width: 90%;
+        }
+
+        .headline-right {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 700;
+            font-family: 'Raleway', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin: 5.5rem 0 0.5rem;
+            padding-left: 2px;
+        }
+
+        .headline-text {
+            position: relative;
+            font-weight: 800;
+            background: linear-gradient(90deg, #333 0%, #000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .tagline {
+            font-size: 0.6rem;
+            color: #555;
+            font-weight: 400;
+            font-family: 'Raleway', sans-serif;
+            letter-spacing: 0.1em;
+            line-height: 1;
+            margin-top: 0rem;
+            max-width: 300px;
+        }
+
+        .tagline-bold {
+            font-weight: 400;
+            color: #333;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .in-view .tagline-bold::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ff1744;
+            transform: translateX(-100%);
+            animation: lineReveal 1.2s forwards 0.5s;
+        }
+
+        .center-image {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2094&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: width 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s ease-in-out;
+            will-change: width, opacity;
+            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
+            filter: contrast(1.1) brightness(0.9);
+            width: 20%;
+            opacity: 0;
+        }
+
+        @keyframes textGlow {
+            0% { opacity: 0.95; text-shadow: 0 0 5px rgba(255, 23, 68, 0); }
+            50% { opacity: 1; text-shadow: 0 0 8px rgba(255, 23, 68, 0.3); }
+            100% { opacity: 0.95; text-shadow: 0 0 5px rgba(255, 23, 68, 0); }
+        }
+
+        @keyframes lineReveal {
+            to { transform: translateX(0); }
+        }
+
+        .in-view .text-left, 
+        .in-view .text-right {
+            animation: textGlow 2.5s infinite ease-in-out;
+        }
+
+        .in-view .headline-text {
+            animation: textGlow 2.5s infinite ease-in-out 0.5s;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .text-left, .text-right {
+                font-size: 3.5rem;
+            }
+            .tagline {
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .text-left, .text-right {
+                font-size: 3rem;
+            }
+            .headline-right {
+                font-size: 0.9rem;
+                margin: 5rem 0 0.5rem;
+            }
+            .tagline {
+                font-size: 0.40rem;
+                max-width: 250px;
+            }
+            .content-wrapper {
+                top: 62%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .panel {
+                width: 50%;
+                position: absolute;
+            }
+            
+            .text-left, .text-right {
+                font-size: 3.2rem;
+                letter-spacing: 0.7em;
+            }
+            
+            .panel-left .text-left {
+                right: 10%;
+            }
+            
+            .panel-right .text-right {
+                left: 10%;
+            }
+            
+            .first-part::after {
+                bottom: -15px;
+                height: 5px;
+            }
+            
+            .in-view .first-part::after {
+                width: 70%;
+            }
+            
+            .content-wrapper {
+                top: 62%;
+                left: 10%;
+                width: 80%;
+            }
+            
+            .headline-right {
+                font-size: 0.95rem;
+                letter-spacing: 0.15em;
+                margin-top: 1.8rem;
+            }
+            
+            .tagline {
+                font-size: 0.9rem;
+                max-width: 90%;
+                margin: 1rem 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .text-left, .text-right {
+                font-size: 2.4rem;
+                letter-spacing: 0.5em;
+            }
+            
+            .panel-left .text-left {
+                right: 8%;
+            }
+            
+            .panel-right .text-right {
+                left: 8%;
+            }
+            
+            .headline-right {
+                font-size: 0.85rem;
+                margin-top: 1.5rem;
+                letter-spacing: 0.12em;
+            }
+            
+            .tagline {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+            
+            .first-part::after {
+                bottom: -12px;
+                height: 4px;
+            }
+            
+            .content-wrapper {
+                top: 65%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .text-left, .text-right {
+                font-size: 2rem;
+                letter-spacing: 0.4em;
+            }
+            
+            .panel-left .text-left {
+                right: 5%;
+            }
+            
+            .panel-right .text-right {
+                left: 5%;
+            }
+            
+            .headline-right {
+                font-size: 0.8rem;
+                letter-spacing: 0.1em;
+                margin-top: 1.3rem;
+            }
+            
+            .tagline {
+                font-size: 0.8rem;
+                line-height: 1.4;
+                max-width: 95%;
+            }
+            
+            .first-part::after {
+                bottom: -10px;
+                height: 3px;
+            }
+            
+            .content-wrapper {
+                top: 65%;
+            }
+        }
+        
+        /* Handle very small devices */
+        @media (max-width: 360px) {
+            .text-left, .text-right {
+                font-size: 1.6rem;
+                letter-spacing: 0.3em;
+            }
+            
+            .headline-right {
+                font-size: 0.75rem;
+                letter-spacing: 0.08em;
+                margin-top: 1.2rem;
+            }
+            
+            .tagline {
+                font-size: 0.75rem;
+            }
+            
+            .content-wrapper {
+                top: 68%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Spacer content to enable scrolling -->
+    <div class="spacer">
+        <div style="text-align: center;">
+            <h2>Scroll down to see the NEO TOKYO reveal effect</h2>
+            <p style="font-size: 1rem; margin-top: 1rem; opacity: 0.8;">↓ Keep scrolling ↓</p>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div id="parallax-container" class="parallax-container">
+            <!-- Left Panel - Contains NEO text -->
+            <div id="panel-left" class="panel panel-left">
+                <div class="text-left">NEO</div>
+            </div>
+
+            <!-- Right Panel - Contains TOKYO text -->
+            <div id="panel-right" class="panel panel-right">
+                <div class="text-right">
+                    <span class="first-part">TO</span>
+                    <span class="second-part">KYO</span>
+                </div>
+                <div class="content-wrapper">
+                    <div class="tagline">
+                        <span class="tagline-bold">Experience the Power of Personalization</span>       
+                    </div>
+                    
+                    <div class="headline-right">
+                        <span class="headline-text">ENDLESS POSSIBILITIES</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Image with Tokyo background -->
+            <div id="center-image" class="center-image"></div>
+        </div>
+        
+        <!-- Red border at the bottom -->
+        <div class="red-border-bottom"></div>
+    </div>
+
+    <!-- Another spacer to continue scrolling -->
+    <div class="spacer">
+        <div style="text-align: center;">
+            <h2>Continue exploring</h2>
+            <p style="font-size: 1rem; margin-top: 1rem; opacity: 0.8;">The parallax effect is complete!</p>
+        </div>
+    </div>
+
+    <script>
+        // State variables
+        let scrollY = 0;
+        let inView = false;
+        
+        // Get DOM elements
+        const parallaxContainer = document.getElementById('parallax-container');
+        const panelLeft = document.getElementById('panel-left');
+        const panelRight = document.getElementById('panel-right');
+        const centerImage = document.getElementById('center-image');
+
+        // Throttle function for performance
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        }
+
+        function handleScroll() {
+            scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Check if section is in view
+            const rect = parallaxContainer.getBoundingClientRect();
+            const isInView = rect.top <= window.innerHeight / 2 && rect.bottom >= 0;
+            
+            if (isInView !== inView) {
+                inView = isInView;
+                if (inView) {
+                    parallaxContainer.classList.add('in-view');
+                } else {
+                    parallaxContainer.classList.remove('in-view');
+                }
+            }
+
+            // Calculate parallax values
+            const parallaxActive = scrollY > 200;
+            const parallaxDeep = scrollY > 300;
+            const panelTransformPercentage = Math.min(100, scrollY / 5);
+            const imageWidth = parallaxActive ? 100 : 20;
+            const imageOpacity = Math.min(1, scrollY / 300);
+
+            // Update classes
+            if (parallaxActive) {
+                parallaxContainer.classList.add('parallax-active');
+            } else {
+                parallaxContainer.classList.remove('parallax-active');
+            }
+
+            if (parallaxDeep) {
+                parallaxContainer.classList.add('parallax-deep');
+            } else {
+                parallaxContainer.classList.remove('parallax-deep');
+            }
+
+            // Apply transforms
+            panelLeft.style.transform = `translateX(-${panelTransformPercentage}%)`;
+            panelRight.style.transform = `translateX(${panelTransformPercentage}%)`;
+            centerImage.style.width = `${imageWidth}%`;
+            centerImage.style.opacity = imageOpacity;
+        }
+
+        // Throttled scroll handler for better performance
+        const throttledScrollHandler = throttle(handleScroll, 16); // ~60fps
+
+        // Initial call
+        handleScroll();
+
+        // Add scroll event listener
+        window.addEventListener('scroll', throttledScrollHandler);
+
+        // Add resize event listener for responsive behavior
+        window.addEventListener('resize', throttle(handleScroll, 100));
+
+        // Optional: Add intersection observer for better performance on mobile
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        window.addEventListener('scroll', throttledScrollHandler);
+                    } else {
+                        // Optionally remove listener when not in view for better performance
+                        // window.removeEventListener('scroll', throttledScrollHandler);
+                    }
+                });
+            }, {
+                rootMargin: '50px'
+            });
+
+            observer.observe(parallaxContainer);
+        }
+    </script>
+</body>
+</html>
