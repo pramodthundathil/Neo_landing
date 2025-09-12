@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechHub - Premium IT Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Rajdhani', sans-serif !important;
+        }
+        
+        :root {
+            --primary-pink: rgb(255, 0, 85);
+            --dark-pink: rgb(200, 0, 65);
+        }
+        
+        .brand-pink {
+            color: var(--primary-pink);
+        }
+        
+        .bg-brand-pink {
+            background-color: var(--primary-pink);
+        }
+        
+        .border-brand-pink {
+            border-color: var(--primary-pink);
+        }
+        
+        .hover-brand-pink:hover {
+            background-color: var(--dark-pink);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(255, 0, 85, 0.25);
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+        }
+
+        .section-enter {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .tech-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="gradient-bg text-white min-h-screen">
+    <!-- Header -->
+    <header class="relative overflow-hidden py-20">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-pink-500/5 to-transparent"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="text-6xl md:text-8xl font-bold mb-4">
+                Tech<span class="brand-pink">Hub</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                Premium IT Solutions • Custom Builds • Enterprise Infrastructure
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="px-4 py-2 bg-gray-800 rounded-full text-sm border border-gray-700">Hardware Specialists</span>
+                <span class="px-4 py-2 bg-gray-800 rounded-full text-sm border border-gray-700">Enterprise Grade</span>
+                <span class="px-4 py-2 bg-brand-pink rounded-full text-sm text-black font-semibold">24/7 Support</span>
+            </div>
+        </div>
+    </header>
+
+  
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-8 mt-20">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p>&copy; 2025 TechHub. Premium IT Solutions for Modern Business.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scroll animation for cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(card);
+        });
+
+        // Add subtle parallax effect to header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
